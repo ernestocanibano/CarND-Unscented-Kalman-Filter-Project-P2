@@ -40,6 +40,18 @@ class UKF {
    * @param meas_package The measurement at k+1
    */
   void UpdateRadar(MeasurementPackage meas_package);
+  
+  /**
+   * Generates sigma points
+   */
+  Eigen::MatrixXd GenerateSigmaPoints();
+  
+  /**
+   * Predict sigma points
+   * @param Xsig_aug The augmented sigma points matrix
+   * @param dt Time in seconds since previous measure
+   */
+  void PredictSigmaPoints(const Eigen::MatrixXd &Xsig_aug, double dt);
 
 
   // initially set to false, set to true in first call of ProcessMeasurement
@@ -95,6 +107,20 @@ class UKF {
 
   // Sigma point spreading parameter
   double lambda_;
+  
+   // Radar measurement dimension
+  int n_z_radar_;
+  
+  // Laser measurement dimension
+  int n_z_lidar_;
+  
+  // NIS for radar
+  double NIS_radar_;
+
+  // NIS for laser
+  double NIS_laser_;
+
+  
 };
 
 #endif  // UKF_H
